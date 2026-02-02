@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#09090b" rx="90"/>
+  <g transform="translate(128,128)">
+    <!-- Chart line -->
+    <path d="M 40 200 Q 80 120 120 140 T 200 100 T 256 80" 
+          stroke="#34d399" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <!-- Dollar sign -->
+    <text x="128" y="240" font-family="Inter, sans-serif" font-size="80" 
+          font-weight="bold" fill="#f4f4f5" text-anchor="middle">$</text>
+  </g>
+</svg>

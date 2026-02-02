@@ -2,11 +2,17 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Market Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#09090b">
+    <title>Markets</title>
+    
+    <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -20,155 +26,246 @@
             color: #f4f4f5;
             line-height: 1.6;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            background-color: #09090b;
+            border-bottom: 1px solid #27272a;
+            z-index: 100;
             padding: 1rem;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding: 2rem 0;
+        .header-content {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            color: #f4f4f5;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .back-button:hover {
+            background-color: #27272a;
+        }
+
+        /* Container */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Views */
+        .view {
+            display: none;
+            padding: 0;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        /* List View */
+        .list-view {
+            padding: 0;
+        }
+
+        .category-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .category-header {
+            padding: 1rem 1rem 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #a1a1aa;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .asset-list {
+            background-color: #18181b;
+            margin: 0 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .asset-row {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #27272a;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            min-height: 60px;
+        }
+
+        .asset-row:last-child {
+            border-bottom: none;
+        }
+
+        .asset-row:hover {
+            background-color: #27272a;
+        }
+
+        .asset-icon {
+            font-size: 1.2rem;
+            width: 2rem;
+            text-align: center;
+            margin-right: 0.75rem;
+        }
+
+        .asset-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .asset-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #f4f4f5;
+            margin-bottom: 0.1rem;
+        }
+
+        .asset-symbol {
+            font-size: 0.75rem;
+            color: #71717a;
+        }
+
+        .asset-price {
+            text-align: right;
+            margin-right: 0.75rem;
+            min-width: 0;
+        }
+
+        .price {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #f4f4f5;
+            margin-bottom: 0.1rem;
+        }
+
+        .change {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .change.positive {
+            color: #34d399;
+        }
+
+        .change.negative {
+            color: #f87171;
+        }
+
+        .change.neutral {
+            color: #a1a1aa;
+        }
+
+        .sparkline-container {
+            width: 50px;
+            height: 30px;
+            margin-left: 0.5rem;
+        }
+
+        .sparkline {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Detail View */
+        .detail-view {
+            padding: 1rem;
+        }
+
+        .detail-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .detail-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #a1a1aa;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-price {
             font-size: 2.5rem;
             font-weight: 700;
             color: #f4f4f5;
             margin-bottom: 0.5rem;
         }
 
-        .last-updated {
-            color: #a1a1aa;
-            font-size: 0.9rem;
-            font-weight: 400;
-        }
-
-        .category-section {
-            margin-bottom: 3rem;
-        }
-
-        .category-title {
-            font-size: 1.5rem;
+        .detail-change {
+            font-size: 1rem;
             font-weight: 600;
-            color: #e4e4e7;
-            margin-bottom: 1rem;
-            padding-left: 0.5rem;
         }
 
-        .assets-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .assets-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.75rem;
-            }
-        }
-
-        .asset-card {
-            background-color: #18181b;
-            border: 1px solid #27272a;
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.2s ease-in-out;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .asset-card:hover {
-            border-color: #3f3f46;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .asset-header {
+        .time-range-buttons {
             display: flex;
-            align-items: center;
+            background-color: #18181b;
+            border-radius: 8px;
+            padding: 0.25rem;
             margin-bottom: 1rem;
         }
 
-        .asset-icon {
-            font-size: 1.5rem;
-            margin-right: 0.75rem;
-        }
-
-        .asset-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #f4f4f5;
-        }
-
-        .asset-symbol {
+        .time-range-button {
+            flex: 1;
+            background: none;
+            border: none;
             color: #a1a1aa;
-            font-size: 0.85rem;
-            margin-left: auto;
+            font-size: 0.8rem;
             font-weight: 500;
-        }
-
-        .price-section {
-            margin-bottom: 1rem;
-        }
-
-        .current-price {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #f4f4f5;
-            margin-bottom: 0.25rem;
-        }
-
-        .price-change {
-            font-size: 0.9rem;
-            font-weight: 600;
-            padding: 0.25rem 0.5rem;
+            padding: 0.5rem;
             border-radius: 6px;
-            display: inline-block;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .price-change.positive {
-            color: #34d399;
-            background-color: rgba(52, 211, 153, 0.1);
+        .time-range-button.active {
+            background-color: #f4f4f5;
+            color: #09090b;
         }
 
-        .price-change.negative {
-            color: #f87171;
-            background-color: rgba(248, 113, 113, 0.1);
-        }
-
-        .price-change.neutral {
-            color: #a1a1aa;
-            background-color: rgba(161, 161, 170, 0.1);
-        }
-
-        .sparkline-container {
-            height: 30px;
-            margin-top: 1rem;
-        }
-
-        .sparkline {
-            width: 100%;
-            height: 100%;
-            opacity: 0.8;
-        }
-
-        .loading-card {
+        .chart-container {
             background-color: #18181b;
-            border: 1px solid #27272a;
-            border-radius: 12px;
-            padding: 1.5rem;
+            border-radius: 8px;
+            height: 300px;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        /* Loading and Error States */
+        .loading {
             text-align: center;
+            padding: 2rem;
             color: #a1a1aa;
-            min-height: 160px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
+        }
+
+        .error {
+            text-align: center;
+            padding: 2rem;
+            color: #f87171;
         }
 
         .loading-spinner {
@@ -178,7 +275,7 @@
             width: 20px;
             height: 20px;
             animation: spin 1s linear infinite;
-            margin-bottom: 0.5rem;
+            margin: 0 auto 0.5rem;
         }
 
         @keyframes spin {
@@ -186,425 +283,571 @@
             100% { transform: rotate(360deg); }
         }
 
-        .error-card {
-            background-color: #18181b;
-            border: 1px solid #dc2626;
-            border-radius: 12px;
-            padding: 1.5rem;
-            color: #f87171;
-            text-align: center;
-        }
-
-        .connection-status {
+        /* Connection Status */
+        .status-indicator {
             position: fixed;
             top: 1rem;
             right: 1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 500;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #f87171;
             z-index: 1000;
+            transition: background-color 0.3s;
         }
 
-        .connection-status.online {
-            background-color: rgba(52, 211, 153, 0.2);
-            color: #34d399;
-            border: 1px solid rgba(52, 211, 153, 0.3);
+        .status-indicator.online {
+            background-color: #34d399;
         }
 
-        .connection-status.offline {
-            background-color: rgba(248, 113, 113, 0.2);
-            color: #f87171;
-            border: 1px solid rgba(248, 113, 113, 0.3);
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 4rem;
-            padding: 2rem 0;
-            border-top: 1px solid #27272a;
-            color: #71717a;
-            font-size: 0.9rem;
-        }
-
-        .footer a {
-            color: #a1a1aa;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            color: #f4f4f5;
+        /* Responsive */
+        @media (max-width: 480px) {
+            .asset-row {
+                padding: 0.6rem 0.8rem;
+            }
+            
+            .asset-icon {
+                font-size: 1rem;
+                margin-right: 0.5rem;
+                width: 1.5rem;
+            }
+            
+            .detail-price {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>Market Dashboard</h1>
-            <div class="last-updated" id="lastUpdated">Loading...</div>
-        </header>
+    <div class="status-indicator" id="status"></div>
+    
+    <header class="header">
+        <div class="header-content">
+            <button class="back-button" id="backButton" style="display: none;" onclick="app.goBack()">
+                ←
+            </button>
+            <h1 id="headerTitle">Markets</h1>
+            <div style="width: 2rem;"></div> <!-- Spacer for centering -->
+        </div>
+    </header>
 
-        <div id="dashboard" class="dashboard">
-            <!-- Categories will be loaded here -->
+    <div class="container">
+        <!-- List View -->
+        <div class="view list-view active" id="listView">
+            <div id="marketList">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    Loading markets...
+                </div>
+            </div>
         </div>
 
-        <footer class="footer">
-            <p>
-                Data sources: Yahoo Finance (metals, commodities, forex) • Binance (crypto) • 
-                <strong>Non-crypto data updates every 15 minutes</strong>
-            </p>
-            <p style="margin-top: 0.5rem;">
-                Built with ❤️ by <a href="https://github.com/patrickdong16" target="_blank">Patrick Dong</a>
-            </p>
-        </footer>
+        <!-- Detail View -->
+        <div class="view detail-view" id="detailView">
+            <div class="detail-header" id="detailHeader">
+                <div class="detail-name" id="detailName"></div>
+                <div class="detail-price" id="detailPrice"></div>
+                <div class="detail-change" id="detailChange"></div>
+            </div>
+            
+            <div class="time-range-buttons" id="timeRangeButtons">
+                <button class="time-range-button" data-range="5d">1W</button>
+                <button class="time-range-button active" data-range="3mo">3M</button>
+                <button class="time-range-button" data-range="1y">1Y</button>
+            </div>
+            
+            <div class="chart-container" id="chartContainer">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    Loading chart...
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div id="connectionStatus" class="connection-status offline">
-        ● Connecting...
-    </div>
-
+    <!-- TradingView Lightweight Charts -->
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    
     <script>
+        // Configuration
+        const API_BASE_URL = 'https://market-dashboard-api.vercel.app'; // Will be configurable
+        const UPDATE_INTERVAL = 30000; // 30 seconds
+
         class MarketDashboard {
             constructor() {
                 this.config = null;
-                this.latestData = null;
-                this.historyData = null;
-                this.websockets = new Map();
-                this.refreshInterval = 30000; // 30 seconds
+                this.data = new Map();
+                this.websocket = null;
+                this.chart = null;
+                this.currentSymbol = null;
+                this.updateTimer = null;
                 this.init();
             }
 
             async init() {
                 try {
                     await this.loadConfig();
+                    this.setupRouter();
+                    this.setupEventListeners();
                     await this.loadData();
-                    this.renderDashboard();
-                    this.setupWebSockets();
-                    this.setupRefreshTimer();
-                    this.updateConnectionStatus('online');
+                    this.renderList();
+                    this.setupWebSocket();
+                    this.startUpdateTimer();
+                    this.updateStatus('online');
                 } catch (error) {
-                    console.error('Failed to initialize dashboard:', error);
-                    this.updateConnectionStatus('offline');
-                    this.renderError('Failed to load market data. Please check your connection and try again.');
+                    console.error('Init error:', error);
+                    this.showError('Failed to load market data');
+                    this.updateStatus('offline');
                 }
             }
 
             async loadConfig() {
-                const response = await fetch('/config.json');
+                const response = await fetch('./config.json');
                 if (!response.ok) throw new Error('Failed to load config');
                 this.config = await response.json();
-                this.refreshInterval = (this.config.refresh_interval_seconds || 30) * 1000;
+            }
+
+            setupRouter() {
+                window.addEventListener('hashchange', () => this.handleRoute());
+                this.handleRoute();
+            }
+
+            handleRoute() {
+                const hash = window.location.hash.slice(1);
+                
+                if (hash.startsWith('/detail/')) {
+                    const symbol = hash.replace('/detail/', '');
+                    this.showDetail(symbol);
+                } else {
+                    this.showList();
+                }
+            }
+
+            setupEventListeners() {
+                // Time range buttons
+                document.getElementById('timeRangeButtons').addEventListener('click', (e) => {
+                    if (e.target.classList.contains('time-range-button')) {
+                        const range = e.target.dataset.range;
+                        this.changeTimeRange(range);
+                    }
+                });
             }
 
             async loadData() {
-                // Load both latest.json and history.json
-                const [latestResponse, historyResponse] = await Promise.all([
-                    fetch('/data/latest.json'),
-                    fetch('/data/history.json')
-                ]);
+                try {
+                    const yahooSymbols = [];
+                    
+                    this.config.categories.forEach(category => {
+                        category.assets.forEach(asset => {
+                            if (asset.source === 'yahoo') {
+                                yahooSymbols.push(asset.symbol);
+                            }
+                        });
+                    });
 
-                if (!latestResponse.ok) throw new Error('Failed to load latest data');
-                this.latestData = await latestResponse.json();
-
-                // History data is optional
-                if (historyResponse.ok) {
-                    this.historyData = await historyResponse.json();
-                } else {
-                    this.historyData = {};
+                    if (yahooSymbols.length > 0) {
+                        const symbols = yahooSymbols.join(',');
+                        const response = await fetch(`${API_BASE_URL}/api/quotes?symbols=${symbols}`);
+                        
+                        if (!response.ok) throw new Error('API request failed');
+                        
+                        const yahooData = await response.json();
+                        
+                        // Store data
+                        for (const [symbol, data] of Object.entries(yahooData)) {
+                            this.data.set(symbol, data);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Data loading error:', error);
+                    throw error;
                 }
-
-                this.updateLastUpdated(this.latestData.updated_at);
             }
 
-            renderDashboard() {
-                const dashboard = document.getElementById('dashboard');
-                dashboard.innerHTML = '';
-
-                if (!this.config || !this.latestData) {
-                    dashboard.innerHTML = '<div class="loading-card"><div class="loading-spinner"></div>Loading market data...</div>';
+            renderList() {
+                const listElement = document.getElementById('marketList');
+                
+                if (!this.config) {
+                    listElement.innerHTML = '<div class="error">Config not loaded</div>';
                     return;
                 }
 
-                // Group assets by category
+                let html = '';
+                
                 this.config.categories.forEach(category => {
-                    const categoryEl = this.createCategoryElement(category);
-                    dashboard.appendChild(categoryEl);
-                });
-
-                // Draw sparklines after DOM is ready
-                setTimeout(() => this.drawAllSparklines(), 100);
-            }
-
-            createCategoryElement(category) {
-                const section = document.createElement('div');
-                section.className = 'category-section';
-                
-                const assetsHtml = category.assets.map(asset => this.createAssetCard(asset)).join('');
-                
-                section.innerHTML = `
-                    <h2 class="category-title">${category.name}</h2>
-                    <div class="assets-grid" id="category-${category.id}">
-                        ${assetsHtml}
-                    </div>
-                `;
-                return section;
-            }
-
-            createAssetCard(asset) {
-                const symbol = asset.symbol;
-                const assetData = this.latestData.assets[symbol];
-
-                if (!assetData || assetData.error) {
-                    return `
-                        <div class="error-card">
-                            <div class="asset-header">
-                                <span class="asset-icon">${asset.icon || '⚠️'}</span>
-                                <span class="asset-name">${asset.name}</span>
-                            </div>
-                            <div>Data unavailable</div>
-                            <div style="font-size: 0.8rem; margin-top: 0.5rem;">
-                                ${assetData ? 'Failed to fetch' : 'No data found'}
+                    html += `
+                        <div class="category-section">
+                            <div class="category-header">${category.name}</div>
+                            <div class="asset-list">
+                                ${category.assets.map(asset => this.renderAssetRow(asset)).join('')}
                             </div>
                         </div>
                     `;
-                }
+                });
 
-                const price = this.formatPrice(assetData.price, asset.unit);
-                const changePercent = assetData.change_pct || 0;
+                listElement.innerHTML = html;
+                
+                // Draw sparklines
+                setTimeout(() => this.drawSparklines(), 100);
+            }
+
+            renderAssetRow(asset) {
+                const data = this.data.get(asset.symbol) || {};
+                const price = this.formatPrice(data.price || 0, asset);
+                const changePercent = data.change_pct || 0;
                 const changeClass = changePercent > 0 ? 'positive' : changePercent < 0 ? 'negative' : 'neutral';
                 const changeSymbol = changePercent > 0 ? '+' : '';
 
                 return `
-                    <div class="asset-card" data-symbol="${symbol}" data-source="${asset.source}">
-                        <div class="asset-header">
-                            <span class="asset-icon">${asset.icon}</span>
-                            <span class="asset-name">${asset.name}</span>
-                            <span class="asset-symbol">${symbol}</span>
+                    <div class="asset-row" onclick="app.goToDetail('${asset.symbol}')">
+                        <div class="asset-icon">${asset.icon || '📈'}</div>
+                        <div class="asset-info">
+                            <div class="asset-name">${asset.name}</div>
+                            <div class="asset-symbol">${asset.symbol}</div>
                         </div>
-                        <div class="price-section">
-                            <div class="current-price" data-price="${assetData.price || 0}">${price}</div>
-                            <span class="price-change ${changeClass}">
+                        <div class="asset-price">
+                            <div class="price">${price}</div>
+                            <div class="change ${changeClass}">
                                 ${changeSymbol}${changePercent.toFixed(2)}%
-                            </span>
+                            </div>
                         </div>
                         <div class="sparkline-container">
-                            <canvas class="sparkline" data-symbol="${symbol}" 
-                                    width="200" height="30"></canvas>
+                            <canvas class="sparkline" 
+                                    data-symbol="${asset.symbol}" 
+                                    width="50" height="30"></canvas>
                         </div>
                     </div>
                 `;
             }
 
-            formatPrice(price, unit) {
+            formatPrice(price, asset) {
                 if (!price || price === 0) return 'N/A';
                 
-                // Format number based on size
-                let formattedPrice;
-                if (price >= 1000) {
-                    formattedPrice = price.toLocaleString('en-US', { maximumFractionDigits: 2 });
-                } else if (price >= 1) {
-                    formattedPrice = price.toFixed(4);
+                let finalPrice = price;
+                
+                // Handle copper conversion
+                if (asset.convert === 'lb_to_ton') {
+                    finalPrice = price * 2204.62; // Convert USD/lb to USD/tonne
+                }
+                
+                if (finalPrice >= 1000) {
+                    return `$${finalPrice.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
+                } else if (finalPrice >= 1) {
+                    return `$${finalPrice.toFixed(4)}`;
                 } else {
-                    formattedPrice = price.toFixed(6);
+                    return `$${finalPrice.toFixed(6)}`;
                 }
-
-                // Add unit prefix
-                if (unit.includes('USD') || unit === '') {
-                    return `$${formattedPrice}`;
-                }
-                return `${formattedPrice} ${unit}`;
             }
 
-            setupWebSockets() {
-                if (!this.config) return;
+            drawSparklines() {
+                const canvases = document.querySelectorAll('.sparkline');
+                canvases.forEach(canvas => {
+                    const symbol = canvas.dataset.symbol;
+                    const data = this.data.get(symbol);
+                    
+                    if (data && data.sparkline && data.sparkline.length > 0) {
+                        this.drawSparkline(canvas, data.sparkline);
+                    }
+                });
+            }
 
-                // Get all Binance assets
-                const binanceAssets = [];
+            drawSparkline(canvas, prices) {
+                const ctx = canvas.getContext('2d');
+                const width = canvas.width;
+                const height = canvas.height;
+                
+                ctx.clearRect(0, 0, width, height);
+                
+                if (prices.length < 2) return;
+                
+                const min = Math.min(...prices);
+                const max = Math.max(...prices);
+                const range = max - min || 1;
+                
+                // Determine color based on trend
+                const isUp = prices[prices.length - 1] > prices[0];
+                ctx.strokeStyle = isUp ? '#34d399' : '#f87171';
+                ctx.lineWidth = 1.5;
+                ctx.lineCap = 'round';
+                
+                ctx.beginPath();
+                prices.forEach((price, index) => {
+                    const x = (index / (prices.length - 1)) * width;
+                    const y = height - ((price - min) / range) * height;
+                    
+                    if (index === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                });
+                ctx.stroke();
+            }
+
+            setupWebSocket() {
+                const cryptoSymbols = [];
                 this.config.categories.forEach(category => {
                     category.assets.forEach(asset => {
                         if (asset.source === 'binance') {
-                            binanceAssets.push(asset.symbol.toLowerCase());
+                            cryptoSymbols.push(asset.symbol.toLowerCase());
                         }
                     });
                 });
 
-                if (binanceAssets.length > 0) {
-                    this.connectBinanceWebSocket(binanceAssets);
-                }
-            }
-
-            connectBinanceWebSocket(symbols) {
-                try {
-                    const streams = symbols.map(symbol => `${symbol}@ticker`).join('/');
+                if (cryptoSymbols.length > 0) {
+                    const streams = cryptoSymbols.map(s => `${s}@ticker`).join('/');
                     const wsUrl = `wss://stream.binance.com:9443/ws/${streams}`;
                     
-                    const ws = new WebSocket(wsUrl);
+                    this.websocket = new WebSocket(wsUrl);
                     
-                    ws.onopen = () => {
-                        console.log('Binance WebSocket connected');
-                        this.updateConnectionStatus('online');
+                    this.websocket.onopen = () => {
+                        console.log('WebSocket connected');
+                        this.updateStatus('online');
                     };
                     
-                    ws.onmessage = (event) => {
-                        try {
-                            const data = JSON.parse(event.data);
-                            this.updateCryptoPrice(data);
-                        } catch (error) {
-                            console.error('Failed to parse WebSocket message:', error);
-                        }
+                    this.websocket.onmessage = (event) => {
+                        const data = JSON.parse(event.data);
+                        this.updateCryptoPrice(data);
                     };
                     
-                    ws.onclose = () => {
-                        console.log('Binance WebSocket disconnected, attempting to reconnect...');
-                        setTimeout(() => this.connectBinanceWebSocket(symbols), 3000);
+                    this.websocket.onclose = () => {
+                        console.log('WebSocket disconnected, reconnecting...');
+                        setTimeout(() => this.setupWebSocket(), 3000);
                     };
                     
-                    ws.onerror = (error) => {
-                        console.error('Binance WebSocket error:', error);
-                        this.updateConnectionStatus('offline');
+                    this.websocket.onerror = () => {
+                        this.updateStatus('offline');
                     };
-                    
-                    this.websockets.set('binance', ws);
-                } catch (error) {
-                    console.error('Failed to connect to Binance WebSocket:', error);
                 }
             }
 
             updateCryptoPrice(tickerData) {
-                const symbol = tickerData.s; // Symbol
-                const price = parseFloat(tickerData.c); // Current price
-                const changePercent = parseFloat(tickerData.P); // 24h change percent
-
-                const card = document.querySelector(`[data-symbol="${symbol}"][data-source="binance"]`);
-                if (card) {
-                    // Update price
-                    const priceEl = card.querySelector('.current-price');
-                    if (priceEl) {
-                        priceEl.textContent = this.formatPrice(price, 'USD');
-                        priceEl.dataset.price = price;
-                    }
-
-                    // Update change percent
-                    const changeEl = card.querySelector('.price-change');
-                    if (changeEl) {
-                        changeEl.textContent = `${changePercent >= 0 ? '+' : ''}${changePercent.toFixed(2)}%`;
-                        changeEl.className = `price-change ${changePercent > 0 ? 'positive' : changePercent < 0 ? 'negative' : 'neutral'}`;
-                    }
+                const symbol = tickerData.s;
+                const price = parseFloat(tickerData.c);
+                const changePercent = parseFloat(tickerData.P);
+                
+                // Update data store
+                this.data.set(symbol, {
+                    price: price,
+                    change_pct: changePercent,
+                    prev_close: price / (1 + changePercent / 100),
+                    sparkline: []
+                });
+                
+                // Update UI if on list view
+                if (this.getCurrentView() === 'list') {
+                    this.renderList();
+                }
+                
+                // Update detail view if showing this symbol
+                if (this.currentSymbol === symbol) {
+                    this.updateDetailHeader(symbol);
                 }
             }
 
-            setupRefreshTimer() {
-                setInterval(async () => {
-                    try {
-                        await this.loadData();
-                        this.renderDashboard();
-                        console.log('Data refreshed');
-                    } catch (error) {
-                        console.error('Failed to refresh data:', error);
-                    }
-                }, this.refreshInterval);
-            }
-
-            drawAllSparklines() {
-                const sparklines = document.querySelectorAll('.sparkline');
-                sparklines.forEach(canvas => this.drawSparkline(canvas));
-            }
-
-            drawSparkline(canvas) {
-                try {
-                    const symbol = canvas.dataset.symbol;
-                    const historyData = this.historyData[symbol];
-                    
-                    if (!historyData || !historyData.prices || historyData.prices.length === 0) {
-                        return;
-                    }
-
-                    const prices = historyData.prices;
-                    const ctx = canvas.getContext('2d');
-                    const width = canvas.width;
-                    const height = canvas.height;
-
-                    // Clear canvas
-                    ctx.clearRect(0, 0, width, height);
-
-                    // Calculate bounds
-                    const min = Math.min(...prices);
-                    const max = Math.max(...prices);
-                    const range = max - min || 1;
-
-                    // Determine line color based on trend
-                    const firstPrice = prices[0];
-                    const lastPrice = prices[prices.length - 1];
-                    if (lastPrice > firstPrice) {
-                        ctx.strokeStyle = '#34d399'; // emerald-400 for upward trend
-                    } else if (lastPrice < firstPrice) {
-                        ctx.strokeStyle = '#f87171'; // red-400 for downward trend
-                    } else {
-                        ctx.strokeStyle = '#a1a1aa'; // gray for no change
-                    }
-
-                    // Drawing settings
-                    ctx.lineWidth = 1.5;
-                    ctx.lineCap = 'round';
-                    ctx.lineJoin = 'round';
-
-                    // Draw line
-                    ctx.beginPath();
-                    prices.forEach((price, index) => {
-                        const x = (index / (prices.length - 1)) * width;
-                        const y = height - ((price - min) / range) * height;
-                        
-                        if (index === 0) {
-                            ctx.moveTo(x, y);
-                        } else {
-                            ctx.lineTo(x, y);
+            startUpdateTimer() {
+                this.updateTimer = setInterval(() => {
+                    this.loadData().then(() => {
+                        if (this.getCurrentView() === 'list') {
+                            this.renderList();
                         }
+                    }).catch(error => {
+                        console.error('Update error:', error);
                     });
-                    ctx.stroke();
+                }, UPDATE_INTERVAL);
+            }
 
-                } catch (error) {
-                    console.error('Failed to draw sparkline:', error);
+            getCurrentView() {
+                return document.querySelector('.view.active').id === 'listView' ? 'list' : 'detail';
+            }
+
+            goToDetail(symbol) {
+                window.location.hash = `#/detail/${symbol}`;
+            }
+
+            goBack() {
+                window.location.hash = '#/';
+            }
+
+            showList() {
+                document.getElementById('listView').classList.add('active');
+                document.getElementById('detailView').classList.remove('active');
+                document.getElementById('backButton').style.display = 'none';
+                document.getElementById('headerTitle').textContent = 'Markets';
+                this.currentSymbol = null;
+                
+                if (this.chart) {
+                    this.chart.remove();
+                    this.chart = null;
                 }
             }
 
-            updateLastUpdated(timestamp) {
-                const lastUpdatedEl = document.getElementById('lastUpdated');
-                if (timestamp && lastUpdatedEl) {
-                    const date = new Date(timestamp);
-                    lastUpdatedEl.textContent = `Last updated: ${date.toLocaleString()}`;
+            showDetail(symbol) {
+                document.getElementById('listView').classList.remove('active');
+                document.getElementById('detailView').classList.add('active');
+                document.getElementById('backButton').style.display = 'block';
+                
+                this.currentSymbol = symbol;
+                this.updateDetailHeader(symbol);
+                this.loadChart(symbol, '3mo');
+            }
+
+            updateDetailHeader(symbol) {
+                const asset = this.findAssetBySymbol(symbol);
+                const data = this.data.get(symbol) || {};
+                
+                document.getElementById('headerTitle').textContent = asset ? asset.name : symbol;
+                document.getElementById('detailName').textContent = asset ? `${asset.name} (${symbol})` : symbol;
+                
+                const price = this.formatPrice(data.price || 0, asset || {});
+                document.getElementById('detailPrice').textContent = price;
+                
+                const changePercent = data.change_pct || 0;
+                const changeClass = changePercent > 0 ? 'positive' : changePercent < 0 ? 'negative' : 'neutral';
+                const changeSymbol = changePercent > 0 ? '+' : '';
+                const changeEl = document.getElementById('detailChange');
+                changeEl.textContent = `${changeSymbol}${changePercent.toFixed(2)}%`;
+                changeEl.className = `detail-change ${changeClass}`;
+            }
+
+            findAssetBySymbol(symbol) {
+                for (const category of this.config.categories) {
+                    for (const asset of category.assets) {
+                        if (asset.symbol === symbol) {
+                            return asset;
+                        }
+                    }
                 }
+                return null;
             }
 
-            updateConnectionStatus(status) {
-                const statusEl = document.getElementById('connectionStatus');
-                statusEl.className = `connection-status ${status}`;
-                statusEl.textContent = status === 'online' ? '● Live' : '● Offline';
-            }
-
-            renderError(message) {
-                const dashboard = document.getElementById('dashboard');
-                dashboard.innerHTML = `
-                    <div class="error-card" style="max-width: 600px; margin: 2rem auto;">
-                        <h3 style="margin-bottom: 1rem;">⚠️ Error</h3>
-                        <p>${message}</p>
-                        <button onclick="location.reload()" style="
-                            margin-top: 1rem; 
-                            padding: 0.5rem 1rem; 
-                            background: #18181b; 
-                            border: 1px solid #3f3f46; 
-                            color: #f4f4f5; 
-                            border-radius: 6px; 
-                            cursor: pointer;
-                        ">Retry</button>
+            async loadChart(symbol, range) {
+                const container = document.getElementById('chartContainer');
+                container.innerHTML = `
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        Loading chart...
                     </div>
                 `;
+
+                try {
+                    const asset = this.findAssetBySymbol(symbol);
+                    let chartData;
+                    
+                    if (asset && asset.source === 'binance') {
+                        // Use Binance Klines API for crypto
+                        chartData = await this.loadBinanceChart(symbol, range);
+                    } else {
+                        // Use our API for other symbols
+                        const response = await fetch(`${API_BASE_URL}/api/chart?symbol=${symbol}&range=${range}&interval=1d`);
+                        if (!response.ok) throw new Error('Failed to load chart');
+                        chartData = await response.json();
+                    }
+
+                    this.renderChart(chartData);
+                } catch (error) {
+                    console.error('Chart loading error:', error);
+                    container.innerHTML = '<div class="error">Failed to load chart</div>';
+                }
+            }
+
+            async loadBinanceChart(symbol, range) {
+                // Map range to limit
+                let limit = 90; // 3mo default
+                if (range === '5d') limit = 7;
+                else if (range === '1y') limit = 365;
+                
+                const response = await fetch(`https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=1d&limit=${limit}`);
+                if (!response.ok) throw new Error('Binance API error');
+                
+                const klines = await response.json();
+                return klines.map(k => ({
+                    time: parseInt(k[0]) / 1000, // Convert to seconds
+                    open: parseFloat(k[1]),
+                    high: parseFloat(k[2]),
+                    low: parseFloat(k[3]),
+                    close: parseFloat(k[4]),
+                    volume: parseFloat(k[5])
+                }));
+            }
+
+            renderChart(data) {
+                const container = document.getElementById('chartContainer');
+                container.innerHTML = '';
+
+                if (this.chart) {
+                    this.chart.remove();
+                }
+
+                this.chart = LightweightCharts.createChart(container, {
+                    width: container.clientWidth,
+                    height: 300,
+                    layout: {
+                        background: { color: '#18181b' },
+                        textColor: '#a1a1aa',
+                    },
+                    grid: {
+                        vertLines: { color: '#27272a' },
+                        horzLines: { color: '#27272a' },
+                    },
+                    crosshair: {
+                        mode: LightweightCharts.CrosshairMode.Normal,
+                    },
+                    timeScale: {
+                        borderColor: '#27272a',
+                    },
+                    rightPriceScale: {
+                        borderColor: '#27272a',
+                    },
+                });
+
+                const candleSeries = this.chart.addCandlestickSeries({
+                    upColor: '#34d399',
+                    downColor: '#f87171',
+                    borderDownColor: '#f87171',
+                    borderUpColor: '#34d399',
+                    wickDownColor: '#f87171',
+                    wickUpColor: '#34d399',
+                });
+
+                candleSeries.setData(data);
+                this.chart.timeScale().fitContent();
+
+                // Handle resize
+                window.addEventListener('resize', () => {
+                    if (this.chart) {
+                        this.chart.applyOptions({
+                            width: container.clientWidth,
+                        });
+                    }
+                });
+            }
+
+            changeTimeRange(range) {
+                // Update active button
+                document.querySelectorAll('.time-range-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-range="${range}"]`).classList.add('active');
+                
+                // Reload chart
+                if (this.currentSymbol) {
+                    this.loadChart(this.currentSymbol, range);
+                }
+            }
+
+            updateStatus(status) {
+                const indicator = document.getElementById('status');
+                indicator.className = `status-indicator ${status}`;
+            }
+
+            showError(message) {
+                document.getElementById('marketList').innerHTML = `<div class="error">${message}</div>`;
             }
         }
 
-        // Initialize dashboard when DOM is ready
-        document.addEventListener('DOMContentLoaded', () => {
-            new MarketDashboard();
-        });
+        // Global app instance
+        const app = new MarketDashboard();
     </script>
 </body>
 </html>
