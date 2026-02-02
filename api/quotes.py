@@ -3,6 +3,7 @@ import json
 import urllib.request
 import urllib.parse
 import urllib.error
+import traceback
 
 
 def fetch_symbol(symbol):
@@ -58,18 +59,36 @@ class handler(BaseHTTPRequestHandler):
             symbols_list = [s.strip() for s in symbols.split(',') if s.strip()]
 
             result = {}
+            errors = []
             for sym in symbols_list:
                 try:
                     data = fetch_symbol(sym)
                     if data:
                         result[sym] = data
-                except Exception:
-                    pass
+                    else:
+                        errors.append(f"{sym}: no data")
+                except urllib.error.URLError as e:
+                    errors.append(f"{sym}: URLError: {str(e)}")
+                except urllib.error.HTTPError as e:
+                    errors.append(f"{sym}: HTTP {e.code}: {e.reason}")
+                except Exception as e:
+                    errors.append(f"{sym}: {type(e).__name__}: {str(e)}")
 
-            self._respond(200, result)
+            response = result
+            if errors and not result:
+                response = {'error': 'all symbols failed', 'details': errors}
+                self._respond(502, response)
+            else:
+                if errors:
+                    response['_errors'] = errors
+                self._respond(200, response)
 
         except Exception as e:
-            self._respond(500, {'error': str(e)})
+            self._respond(500, {
+                'error': str(e),
+                'type': type(e).__name__,
+                'trace': traceback.format_exc()
+            })
 
     def do_OPTIONS(self):
         self.send_response(200)
@@ -80,7 +99,7 @@ class handler(BaseHTTPRequestHandler):
         self.send_response(code)
         self._cors_headers()
         self.send_header('Content-Type', 'application/json')
-        self.send_header('Cache-Control', 's-maxage=15')
+        self.send_header('Cache-Control', 'no-cache, no-store')
         self.end_headers()
         self.wfile.write(json.dumps(data).encode())
 
