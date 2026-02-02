@@ -1,0 +1,59 @@
+name: Update Market Prices
+
+on:
+  schedule:
+    # 每 15 分钟更新一次数据
+    - cron: '*/15 * * * *'
+  
+  # 支持手动触发
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-prices:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install yfinance requests
+    
+    - name: Fetch market data
+      run: |
+        cd ${{ github.workspace }}
+        python scripts/fetch_prices.py
+    
+    - name: Check for changes
+      id: check_changes
+      run: |
+        git diff --exit-code data/ || echo "changes=true" >> $GITHUB_OUTPUT
+    
+    - name: Commit and push changes
+      if: steps.check_changes.outputs.changes == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add data/
+        git commit -m "Update market data $(date +'%Y-%m-%d %H:%M:%S UTC')"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Log completion
+      run: |
+        echo "Market data update completed at $(date)"
+        if [ -f "data/latest.json" ]; then
+          echo "Latest data file size: $(du -h data/latest.json | cut -f1)"
+          echo "Data timestamp: $(python -c "import json; data=json.load(open('data/latest.json')); print(data.get('last_updated', 'N/A'))")"
+        fi

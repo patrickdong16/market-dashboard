@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #09090b;
+            color: #f4f4f5;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem 0;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #f4f4f5;
+            margin-bottom: 0.5rem;
+        }
+
+        .last-updated {
+            color: #a1a1aa;
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        .category-section {
+            margin-bottom: 3rem;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #e4e4e7;
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+        }
+
+        .assets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .assets-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+        }
+
+        .asset-card {
+            background-color: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.2s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .asset-card:hover {
+            border-color: #3f3f46;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .asset-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .asset-icon {
+            font-size: 1.5rem;
+            margin-right: 0.75rem;
+        }
+
+        .asset-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #f4f4f5;
+        }
+
+        .asset-symbol {
+            color: #a1a1aa;
+            font-size: 0.85rem;
+            margin-left: auto;
+            font-weight: 500;
+        }
+
+        .price-section {
+            margin-bottom: 1rem;
+        }
+
+        .current-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f4f4f5;
+            margin-bottom: 0.25rem;
+        }
+
+        .price-change {
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .price-change.positive {
+            color: #34d399;
+            background-color: rgba(52, 211, 153, 0.1);
+        }
+
+        .price-change.negative {
+            color: #f87171;
+            background-color: rgba(248, 113, 113, 0.1);
+        }
+
+        .price-change.neutral {
+            color: #a1a1aa;
+            background-color: rgba(161, 161, 170, 0.1);
+        }
+
+        .sparkline-container {
+            height: 40px;
+            margin-top: 1rem;
+        }
+
+        .sparkline {
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+
+        .loading-card {
+            background-color: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            color: #a1a1aa;
+            min-height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .loading-spinner {
+            border: 2px solid #27272a;
+            border-top: 2px solid #3f3f46;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-card {
+            background-color: #18181b;
+            border: 1px solid #dc2626;
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: #f87171;
+            text-align: center;
+        }
+
+        .connection-status {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            z-index: 1000;
+        }
+
+        .connection-status.online {
+            background-color: rgba(52, 211, 153, 0.2);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+
+        .connection-status.offline {
+            background-color: rgba(248, 113, 113, 0.2);
+            color: #f87171;
+            border: 1px solid rgba(248, 113, 113, 0.3);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid #27272a;
+            color: #71717a;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: #a1a1aa;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #f4f4f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Market Dashboard</h1>
+            <div class="last-updated" id="lastUpdated">Loading...</div>
+        </header>
+
+        <div id="dashboard" class="dashboard">
+            <!-- Categories will be loaded here -->
+        </div>
+
+        <footer class="footer">
+            <p>
+                Data sources: Yahoo Finance (metals, commodities, forex) • Binance (crypto) • 
+                <strong>Non-crypto data updates every 15 minutes</strong>
+            </p>
+            <p style="margin-top: 0.5rem;">
+                Built with ❤️ by <a href="https://github.com/patrickdong16" target="_blank">Patrick Dong</a>
+            </p>
+        </footer>
+    </div>
+
+    <div id="connectionStatus" class="connection-status offline">
+        ● Connecting...
+    </div>
+
+    <script>
+        class MarketDashboard {
+            constructor() {
+                this.config = null;
+                this.latestData = null;
+                this.websockets = new Map();
+                this.refreshInterval = 30000; // 30 seconds
+                this.init();
+            }
+
+            async init() {
+                try {
+                    await this.loadConfig();
+                    await this.loadLatestData();
+                    this.renderDashboard();
+                    this.setupWebSockets();
+                    this.setupRefreshTimer();
+                    this.updateConnectionStatus('online');
+                } catch (error) {
+                    console.error('Failed to initialize dashboard:', error);
+                    this.updateConnectionStatus('offline');
+                    this.renderError('Failed to load market data. Please check your connection and try again.');
+                }
+            }
+
+            async loadConfig() {
+                const response = await fetch('/config.json');
+                if (!response.ok) throw new Error('Failed to load config');
+                this.config = await response.json();
+                this.refreshInterval = (this.config.refresh_interval_seconds || 30) * 1000;
+            }
+
+            async loadLatestData() {
+                const response = await fetch('/data/latest.json');
+                if (!response.ok) throw new Error('Failed to load latest data');
+                this.latestData = await response.json();
+                this.updateLastUpdated(this.latestData.last_updated);
+            }
+
+            renderDashboard() {
+                const dashboard = document.getElementById('dashboard');
+                dashboard.innerHTML = '';
+
+                if (!this.latestData || !this.latestData.categories) {
+                    dashboard.innerHTML = '<div class="loading-card"><div class="loading-spinner"></div>Loading market data...</div>';
+                    return;
+                }
+
+                this.latestData.categories.forEach(category => {
+                    const categoryEl = this.createCategoryElement(category);
+                    dashboard.appendChild(categoryEl);
+                });
+            }
+
+            createCategoryElement(category) {
+                const section = document.createElement('div');
+                section.className = 'category-section';
+                section.innerHTML = `
+                    <h2 class="category-title">${category.name}</h2>
+                    <div class="assets-grid" id="category-${category.id}">
+                        ${category.assets.map(asset => this.createAssetCard(asset)).join('')}
+                    </div>
+                `;
+                return section;
+            }
+
+            createAssetCard(asset) {
+                if (asset.error) {
+                    return `
+                        <div class="error-card">
+                            <div class="asset-header">
+                                <span class="asset-icon">${asset.icon || '⚠️'}</span>
+                                <span class="asset-name">${asset.name}</span>
+                            </div>
+                            <div>Data unavailable</div>
+                            <div style="font-size: 0.8rem; margin-top: 0.5rem;">${asset.error}</div>
+                        </div>
+                    `;
+                }
+
+                const price = asset.price ? this.formatPrice(asset.price, asset.unit) : 'N/A';
+                const changePercent = asset.change_percent_24h || 0;
+                const changeClass = changePercent > 0 ? 'positive' : changePercent < 0 ? 'negative' : 'neutral';
+                const changeSymbol = changePercent > 0 ? '+' : '';
+
+                return `
+                    <div class="asset-card" data-symbol="${asset.symbol}" data-source="${asset.source}">
+                        <div class="asset-header">
+                            <span class="asset-icon">${asset.icon}</span>
+                            <span class="asset-name">${asset.name}</span>
+                            <span class="asset-symbol">${asset.symbol}</span>
+                        </div>
+                        <div class="price-section">
+                            <div class="current-price" data-price="${asset.price || 0}">${price}</div>
+                            <span class="price-change ${changeClass}">
+                                ${changeSymbol}${changePercent.toFixed(2)}%
+                            </span>
+                        </div>
+                        <div class="sparkline-container">
+                            <canvas class="sparkline" data-history="${JSON.stringify(asset.history || [])}" 
+                                    width="200" height="40"></canvas>
+                        </div>
+                    </div>
+                `;
+            }
+
+            formatPrice(price, unit) {
+                if (!price || price === 0) return 'N/A';
+                
+                // 格式化数字，根据大小决定小数位数
+                let formattedPrice;
+                if (price >= 1000) {
+                    formattedPrice = price.toLocaleString('en-US', { maximumFractionDigits: 2 });
+                } else if (price >= 1) {
+                    formattedPrice = price.toFixed(4);
+                } else {
+                    formattedPrice = price.toFixed(6);
+                }
+
+                // 添加单位前缀
+                if (unit.includes('USD') || unit === '') {
+                    return `$${formattedPrice}`;
+                }
+                return `${formattedPrice} ${unit}`;
+            }
+
+            setupWebSockets() {
+                // 获取所有 Binance 品种
+                if (!this.latestData || !this.latestData.categories) return;
+
+                const binanceAssets = [];
+                this.latestData.categories.forEach(category => {
+                    category.assets.forEach(asset => {
+                        if (asset.source === 'binance') {
+                            binanceAssets.push(asset.symbol.toLowerCase());
+                        }
+                    });
+                });
+
+                if (binanceAssets.length > 0) {
+                    this.connectBinanceWebSocket(binanceAssets);
+                }
+            }
+
+            connectBinanceWebSocket(symbols) {
+                try {
+                    const streams = symbols.map(symbol => `${symbol}@ticker`).join('/');
+                    const wsUrl = `wss://stream.binance.com:9443/ws/${streams}`;
+                    
+                    const ws = new WebSocket(wsUrl);
+                    
+                    ws.onopen = () => {
+                        console.log('Binance WebSocket connected');
+                        this.updateConnectionStatus('online');
+                    };
+                    
+                    ws.onmessage = (event) => {
+                        try {
+                            const data = JSON.parse(event.data);
+                            this.updateCryptoPrice(data);
+                        } catch (error) {
+                            console.error('Failed to parse WebSocket message:', error);
+                        }
+                    };
+                    
+                    ws.onclose = () => {
+                        console.log('Binance WebSocket disconnected, attempting to reconnect...');
+                        setTimeout(() => this.connectBinanceWebSocket(symbols), 5000);
+                    };
+                    
+                    ws.onerror = (error) => {
+                        console.error('Binance WebSocket error:', error);
+                        this.updateConnectionStatus('offline');
+                    };
+                    
+                    this.websockets.set('binance', ws);
+                } catch (error) {
+                    console.error('Failed to connect to Binance WebSocket:', error);
+                }
+            }
+
+            updateCryptoPrice(tickerData) {
+                const symbol = tickerData.s; // Symbol
+                const price = parseFloat(tickerData.c); // Current price
+                const changePercent = parseFloat(tickerData.P); // 24h change percent
+
+                const card = document.querySelector(`[data-symbol="${symbol}"][data-source="binance"]`);
+                if (card) {
+                    // Update price
+                    const priceEl = card.querySelector('.current-price');
+                    if (priceEl) {
+                        priceEl.textContent = this.formatPrice(price, 'USD');
+                        priceEl.dataset.price = price;
+                    }
+
+                    // Update change percent
+                    const changeEl = card.querySelector('.price-change');
+                    if (changeEl) {
+                        changeEl.textContent = `${changePercent >= 0 ? '+' : ''}${changePercent.toFixed(2)}%`;
+                        changeEl.className = `price-change ${changePercent > 0 ? 'positive' : changePercent < 0 ? 'negative' : 'neutral'}`;
+                    }
+                }
+            }
+
+            setupRefreshTimer() {
+                setInterval(async () => {
+                    try {
+                        await this.loadLatestData();
+                        this.renderDashboard();
+                        this.drawAllSparklines();
+                        console.log('Data refreshed');
+                    } catch (error) {
+                        console.error('Failed to refresh data:', error);
+                    }
+                }, this.refreshInterval);
+            }
+
+            drawAllSparklines() {
+                const sparklines = document.querySelectorAll('.sparkline');
+                sparklines.forEach(canvas => this.drawSparkline(canvas));
+            }
+
+            drawSparkline(canvas) {
+                try {
+                    const history = JSON.parse(canvas.dataset.history || '[]');
+                    if (history.length === 0) return;
+
+                    const ctx = canvas.getContext('2d');
+                    const width = canvas.width;
+                    const height = canvas.height;
+
+                    // Clear canvas
+                    ctx.clearRect(0, 0, width, height);
+
+                    // Calculate bounds
+                    const min = Math.min(...history);
+                    const max = Math.max(...history);
+                    const range = max - min || 1;
+
+                    // Drawing settings
+                    ctx.strokeStyle = '#3f3f46';
+                    ctx.lineWidth = 1.5;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+
+                    // Determine line color based on trend
+                    const firstPrice = history[0];
+                    const lastPrice = history[history.length - 1];
+                    if (lastPrice > firstPrice) {
+                        ctx.strokeStyle = '#34d399'; // Green for upward trend
+                    } else if (lastPrice < firstPrice) {
+                        ctx.strokeStyle = '#f87171'; // Red for downward trend
+                    } else {
+                        ctx.strokeStyle = '#a1a1aa'; // Gray for no change
+                    }
+
+                    // Draw line
+                    ctx.beginPath();
+                    history.forEach((price, index) => {
+                        const x = (index / (history.length - 1)) * width;
+                        const y = height - ((price - min) / range) * height;
+                        
+                        if (index === 0) {
+                            ctx.moveTo(x, y);
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+                    });
+                    ctx.stroke();
+
+                } catch (error) {
+                    console.error('Failed to draw sparkline:', error);
+                }
+            }
+
+            updateLastUpdated(timestamp) {
+                const lastUpdatedEl = document.getElementById('lastUpdated');
+                if (timestamp && lastUpdatedEl) {
+                    const date = new Date(timestamp);
+                    lastUpdatedEl.textContent = `Last updated: ${date.toLocaleString()}`;
+                }
+            }
+
+            updateConnectionStatus(status) {
+                const statusEl = document.getElementById('connectionStatus');
+                statusEl.className = `connection-status ${status}`;
+                statusEl.textContent = status === 'online' ? '● Live' : '● Offline';
+            }
+
+            renderError(message) {
+                const dashboard = document.getElementById('dashboard');
+                dashboard.innerHTML = `
+                    <div class="error-card" style="max-width: 600px; margin: 2rem auto;">
+                        <h3 style="margin-bottom: 1rem;">⚠️ Error</h3>
+                        <p>${message}</p>
+                        <button onclick="location.reload()" style="
+                            margin-top: 1rem; 
+                            padding: 0.5rem 1rem; 
+                            background: #18181b; 
+                            border: 1px solid #3f3f46; 
+                            color: #f4f4f5; 
+                            border-radius: 6px; 
+                            cursor: pointer;
+                        ">Retry</button>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize dashboard when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            const dashboard = new MarketDashboard();
+            
+            // Draw sparklines after initial render
+            setTimeout(() => {
+                dashboard.drawAllSparklines();
+            }, 100);
+        });
+    </script>
+</body>
+</html>
