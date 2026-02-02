@@ -147,7 +147,7 @@
         }
 
         .sparkline-container {
-            height: 40px;
+            height: 30px;
             margin-top: 1rem;
         }
 
@@ -268,6 +268,7 @@
             constructor() {
                 this.config = null;
                 this.latestData = null;
+                this.historyData = null;
                 this.websockets = new Map();
                 this.refreshInterval = 30000; // 30 seconds
                 this.init();
@@ -276,7 +277,7 @@
             async init() {
                 try {
                     await this.loadConfig();
-                    await this.loadLatestData();
+                    await this.loadData();
                     this.renderDashboard();
                     this.setupWebSockets();
                     this.setupRefreshTimer();
@@ -289,48 +290,71 @@
             }
 
             async loadConfig() {
-                const response = await fetch('config.json');
+                const response = await fetch('/config.json');
                 if (!response.ok) throw new Error('Failed to load config');
                 this.config = await response.json();
                 this.refreshInterval = (this.config.refresh_interval_seconds || 30) * 1000;
             }
 
-            async loadLatestData() {
-                const response = await fetch('data/latest.json');
-                if (!response.ok) throw new Error('Failed to load latest data');
-                this.latestData = await response.json();
-                this.updateLastUpdated(this.latestData.last_updated);
+            async loadData() {
+                // Load both latest.json and history.json
+                const [latestResponse, historyResponse] = await Promise.all([
+                    fetch('/data/latest.json'),
+                    fetch('/data/history.json')
+                ]);
+
+                if (!latestResponse.ok) throw new Error('Failed to load latest data');
+                this.latestData = await latestResponse.json();
+
+                // History data is optional
+                if (historyResponse.ok) {
+                    this.historyData = await historyResponse.json();
+                } else {
+                    this.historyData = {};
+                }
+
+                this.updateLastUpdated(this.latestData.updated_at);
             }
 
             renderDashboard() {
                 const dashboard = document.getElementById('dashboard');
                 dashboard.innerHTML = '';
 
-                if (!this.latestData || !this.latestData.categories) {
+                if (!this.config || !this.latestData) {
                     dashboard.innerHTML = '<div class="loading-card"><div class="loading-spinner"></div>Loading market data...</div>';
                     return;
                 }
 
-                this.latestData.categories.forEach(category => {
+                // Group assets by category
+                this.config.categories.forEach(category => {
                     const categoryEl = this.createCategoryElement(category);
                     dashboard.appendChild(categoryEl);
                 });
+
+                // Draw sparklines after DOM is ready
+                setTimeout(() => this.drawAllSparklines(), 100);
             }
 
             createCategoryElement(category) {
                 const section = document.createElement('div');
                 section.className = 'category-section';
+                
+                const assetsHtml = category.assets.map(asset => this.createAssetCard(asset)).join('');
+                
                 section.innerHTML = `
                     <h2 class="category-title">${category.name}</h2>
                     <div class="assets-grid" id="category-${category.id}">
-                        ${category.assets.map(asset => this.createAssetCard(asset)).join('')}
+                        ${assetsHtml}
                     </div>
                 `;
                 return section;
             }
 
             createAssetCard(asset) {
-                if (asset.error) {
+                const symbol = asset.symbol;
+                const assetData = this.latestData.assets[symbol];
+
+                if (!assetData || assetData.error) {
                     return `
                         <div class="error-card">
                             <div class="asset-header">
@@ -338,32 +362,34 @@
                                 <span class="asset-name">${asset.name}</span>
                             </div>
                             <div>Data unavailable</div>
-                            <div style="font-size: 0.8rem; margin-top: 0.5rem;">${asset.error}</div>
+                            <div style="font-size: 0.8rem; margin-top: 0.5rem;">
+                                ${assetData ? 'Failed to fetch' : 'No data found'}
+                            </div>
                         </div>
                     `;
                 }
 
-                const price = asset.price ? this.formatPrice(asset.price, asset.unit) : 'N/A';
-                const changePercent = asset.change_percent_24h || 0;
+                const price = this.formatPrice(assetData.price, asset.unit);
+                const changePercent = assetData.change_pct || 0;
                 const changeClass = changePercent > 0 ? 'positive' : changePercent < 0 ? 'negative' : 'neutral';
                 const changeSymbol = changePercent > 0 ? '+' : '';
 
                 return `
-                    <div class="asset-card" data-symbol="${asset.symbol}" data-source="${asset.source}">
+                    <div class="asset-card" data-symbol="${symbol}" data-source="${asset.source}">
                         <div class="asset-header">
                             <span class="asset-icon">${asset.icon}</span>
                             <span class="asset-name">${asset.name}</span>
-                            <span class="asset-symbol">${asset.symbol}</span>
+                            <span class="asset-symbol">${symbol}</span>
                         </div>
                         <div class="price-section">
-                            <div class="current-price" data-price="${asset.price || 0}">${price}</div>
+                            <div class="current-price" data-price="${assetData.price || 0}">${price}</div>
                             <span class="price-change ${changeClass}">
                                 ${changeSymbol}${changePercent.toFixed(2)}%
                             </span>
                         </div>
                         <div class="sparkline-container">
-                            <canvas class="sparkline" data-history="${JSON.stringify(asset.history || [])}" 
-                                    width="200" height="40"></canvas>
+                            <canvas class="sparkline" data-symbol="${symbol}" 
+                                    width="200" height="30"></canvas>
                         </div>
                     </div>
                 `;
@@ -372,7 +398,7 @@
             formatPrice(price, unit) {
                 if (!price || price === 0) return 'N/A';
                 
-                // 格式化数字，根据大小决定小数位数
+                // Format number based on size
                 let formattedPrice;
                 if (price >= 1000) {
                     formattedPrice = price.toLocaleString('en-US', { maximumFractionDigits: 2 });
@@ -382,7 +408,7 @@
                     formattedPrice = price.toFixed(6);
                 }
 
-                // 添加单位前缀
+                // Add unit prefix
                 if (unit.includes('USD') || unit === '') {
                     return `$${formattedPrice}`;
                 }
@@ -390,11 +416,11 @@
             }
 
             setupWebSockets() {
-                // 获取所有 Binance 品种
-                if (!this.latestData || !this.latestData.categories) return;
+                if (!this.config) return;
 
+                // Get all Binance assets
                 const binanceAssets = [];
-                this.latestData.categories.forEach(category => {
+                this.config.categories.forEach(category => {
                     category.assets.forEach(asset => {
                         if (asset.source === 'binance') {
                             binanceAssets.push(asset.symbol.toLowerCase());
@@ -430,7 +456,7 @@
                     
                     ws.onclose = () => {
                         console.log('Binance WebSocket disconnected, attempting to reconnect...');
-                        setTimeout(() => this.connectBinanceWebSocket(symbols), 5000);
+                        setTimeout(() => this.connectBinanceWebSocket(symbols), 3000);
                     };
                     
                     ws.onerror = (error) => {
@@ -470,9 +496,8 @@
             setupRefreshTimer() {
                 setInterval(async () => {
                     try {
-                        await this.loadLatestData();
+                        await this.loadData();
                         this.renderDashboard();
-                        this.drawAllSparklines();
                         console.log('Data refreshed');
                     } catch (error) {
                         console.error('Failed to refresh data:', error);
@@ -487,9 +512,14 @@
 
             drawSparkline(canvas) {
                 try {
-                    const history = JSON.parse(canvas.dataset.history || '[]');
-                    if (history.length === 0) return;
+                    const symbol = canvas.dataset.symbol;
+                    const historyData = this.historyData[symbol];
+                    
+                    if (!historyData || !historyData.prices || historyData.prices.length === 0) {
+                        return;
+                    }
 
+                    const prices = historyData.prices;
                     const ctx = canvas.getContext('2d');
                     const width = canvas.width;
                     const height = canvas.height;
@@ -498,31 +528,30 @@
                     ctx.clearRect(0, 0, width, height);
 
                     // Calculate bounds
-                    const min = Math.min(...history);
-                    const max = Math.max(...history);
+                    const min = Math.min(...prices);
+                    const max = Math.max(...prices);
                     const range = max - min || 1;
 
+                    // Determine line color based on trend
+                    const firstPrice = prices[0];
+                    const lastPrice = prices[prices.length - 1];
+                    if (lastPrice > firstPrice) {
+                        ctx.strokeStyle = '#34d399'; // emerald-400 for upward trend
+                    } else if (lastPrice < firstPrice) {
+                        ctx.strokeStyle = '#f87171'; // red-400 for downward trend
+                    } else {
+                        ctx.strokeStyle = '#a1a1aa'; // gray for no change
+                    }
+
                     // Drawing settings
-                    ctx.strokeStyle = '#3f3f46';
                     ctx.lineWidth = 1.5;
                     ctx.lineCap = 'round';
                     ctx.lineJoin = 'round';
 
-                    // Determine line color based on trend
-                    const firstPrice = history[0];
-                    const lastPrice = history[history.length - 1];
-                    if (lastPrice > firstPrice) {
-                        ctx.strokeStyle = '#34d399'; // Green for upward trend
-                    } else if (lastPrice < firstPrice) {
-                        ctx.strokeStyle = '#f87171'; // Red for downward trend
-                    } else {
-                        ctx.strokeStyle = '#a1a1aa'; // Gray for no change
-                    }
-
                     // Draw line
                     ctx.beginPath();
-                    history.forEach((price, index) => {
-                        const x = (index / (history.length - 1)) * width;
+                    prices.forEach((price, index) => {
+                        const x = (index / (prices.length - 1)) * width;
                         const y = height - ((price - min) / range) * height;
                         
                         if (index === 0) {
@@ -574,12 +603,7 @@
 
         // Initialize dashboard when DOM is ready
         document.addEventListener('DOMContentLoaded', () => {
-            const dashboard = new MarketDashboard();
-            
-            // Draw sparklines after initial render
-            setTimeout(() => {
-                dashboard.drawAllSparklines();
-            }, 100);
+            new MarketDashboard();
         });
     </script>
 </body>
