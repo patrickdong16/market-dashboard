@@ -446,17 +446,40 @@
                     });
 
                     if (yahooSymbols.length > 0) {
-                        const symbols = yahooSymbols.join(',');
-                        const response = await fetch(`${API_BASE_URL}/api/quotes?symbols=${symbols}`);
-                        
-                        if (!response.ok) throw new Error('API request failed');
-                        
-                        const yahooData = await response.json();
-                        
-                        // Store data
-                        for (const [symbol, data] of Object.entries(yahooData)) {
-                            this.data.set(symbol, data);
-                        }
+                        // Fetch each symbol via /api/chart (reliable) instead of /api/quotes
+                        const fetches = yahooSymbols.map(async (symbol) => {
+                            try {
+                                const resp = await fetch(`${API_BASE_URL}/api/chart?symbol=${encodeURIComponent(symbol)}&range=5d&interval=1d`);
+                                if (!resp.ok) return null;
+                                const chartData = await resp.json();
+                                const points = chartData.data || [];
+                                if (points.length === 0) return null;
+
+                                const latest = points[points.length - 1];
+                                const prevClose = points.length > 1 ? points[points.length - 2].close : latest.open;
+                                const price = latest.close;
+                                const change_pct = prevClose ? ((price - prevClose) / prevClose) * 100 : 0;
+                                const sparkline = points.slice(-5).map(p => p.close);
+
+                                return {
+                                    symbol,
+                                    data: {
+                                        price: price,
+                                        change_pct: Math.round(change_pct * 10000) / 10000,
+                                        prev_close: prevClose,
+                                        sparkline: sparkline
+                                    }
+                                };
+                            } catch (e) {
+                                console.warn(`Failed to fetch ${symbol}:`, e);
+                                return null;
+                            }
+                        });
+
+                        const results = await Promise.all(fetches);
+                        results.forEach(r => {
+                            if (r) this.data.set(r.symbol, r.data);
+                        });
                     }
                 } catch (error) {
                     console.error('Data loading error:', error);
