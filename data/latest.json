@@ -1,42 +1,42 @@
 {
-  "updated_at": "2026-03-27T04:09:28.430093",
+  "updated_at": "2026-03-27T04:58:39.920633",
   "assets": {
     "GC=F": {
-      "price": 4375.5,
-      "change_pct": -3.830933495313903,
-      "prev_close": 4549.7998046875,
+      "price": 4438.0,
+      "change_pct": 1.428408181922066,
+      "prev_close": 4375.5,
       "name": "黄金",
-      "updated": "2026-03-27T04:09:28.765912",
+      "updated": "2026-03-27T04:58:40.679876",
       "unit": "USD/oz",
       "icon": "🥇",
       "category": "metals"
     },
     "SI=F": {
-      "price": 67.6709976196289,
-      "change_pct": -6.481395278465361,
-      "prev_close": 72.36100006103516,
+      "price": 69.61000061035156,
+      "change_pct": 2.8653382673942165,
+      "prev_close": 67.6709976196289,
       "name": "白银",
-      "updated": "2026-03-27T04:09:28.963105",
+      "updated": "2026-03-27T04:58:40.878792",
       "unit": "USD/oz",
       "icon": "🥈",
       "category": "metals"
     },
     "HG=F": {
-      "price": 5.446499824523926,
-      "change_pct": -1.49213210036987,
-      "prev_close": 5.5289998054504395,
+      "price": 5.541500091552734,
+      "change_pct": 1.7442443787669175,
+      "prev_close": 5.446499824523926,
       "name": "铜",
-      "updated": "2026-03-27T04:09:29.192116",
+      "updated": "2026-03-27T04:58:41.014642",
       "unit": "USD/吨",
       "icon": "🔶",
       "category": "metals"
     },
     "NICK.L": {
-      "price": 15.142499923706055,
-      "change_pct": -0.6723513455065424,
+      "price": NaN,
+      "change_pct": NaN,
       "prev_close": 15.244999885559082,
       "name": "镍",
-      "updated": "2026-03-27T04:09:29.426048",
+      "updated": "2026-03-27T04:58:41.159657",
       "unit": "USD (ETC)",
       "icon": "⚙️",
       "category": "metals"
@@ -46,17 +46,17 @@
       "change_pct": -5.10376104753853,
       "prev_close": 89.1500015258789,
       "name": "稀土ETF",
-      "updated": "2026-03-27T04:09:29.682097",
+      "updated": "2026-03-27T04:58:41.316556",
       "unit": "USD",
       "icon": "💎",
       "category": "metals"
     },
     "CL=F": {
-      "price": 94.4800033569336,
-      "change_pct": 4.605849951467354,
-      "prev_close": 90.31999969482422,
+      "price": 93.76000213623047,
+      "change_pct": -0.7620673106700163,
+      "prev_close": 94.4800033569336,
       "name": "WTI原油",
-      "updated": "2026-03-27T04:09:29.824228",
+      "updated": "2026-03-27T04:58:41.453081",
       "unit": "USD/bbl",
       "icon": "🛢️",
       "category": "commodities"
@@ -64,39 +64,39 @@
     "BTCUSDT": {
       "error": true,
       "name": "BTC",
-      "updated": "2026-03-27T04:09:29.965965"
+      "updated": "2026-03-27T04:58:41.623070"
     },
     "ETHUSDT": {
       "error": true,
       "name": "ETH",
-      "updated": "2026-03-27T04:09:30.006037"
+      "updated": "2026-03-27T04:58:41.681968"
     },
     "CNY=X": {
-      "price": 6.912899971008301,
-      "change_pct": 0.17243802464351915,
+      "price": 6.912399768829346,
+      "change_pct": 0.1651897681981332,
       "prev_close": 6.901000022888184,
       "name": "USD/CNY",
-      "updated": "2026-03-27T04:09:30.159205",
+      "updated": "2026-03-27T04:58:41.819985",
       "unit": "",
       "icon": "🇨🇳",
       "category": "fx"
     },
     "JPY=X": {
-      "price": 159.61900329589844,
-      "change_pct": 0.14744303467845624,
+      "price": 159.60000610351562,
+      "change_pct": 0.13552390097449687,
       "prev_close": 159.38400268554688,
       "name": "USD/JPY",
-      "updated": "2026-03-27T04:09:30.336978",
+      "updated": "2026-03-27T04:58:42.018771",
       "unit": "",
       "icon": "🇯🇵",
       "category": "fx"
     },
     "EURUSD=X": {
-      "price": 1.1542012691497803,
-      "change_pct": -0.1685211485586513,
+      "price": 1.1546010971069336,
+      "change_pct": -0.13393843121493396,
       "prev_close": 1.1561496257781982,
       "name": "EUR/USD",
-      "updated": "2026-03-27T04:09:30.505489",
+      "updated": "2026-03-27T04:58:42.150242",
       "unit": "",
       "icon": "🇪🇺",
       "category": "fx"
