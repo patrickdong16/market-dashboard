@@ -1,32 +1,32 @@
 {
-  "updated_at": "2026-04-09T03:40:08.867168",
+  "updated_at": "2026-04-09T04:37:23.588513",
   "assets": {
     "GC=F": {
-      "price": 4735.5,
-      "change_pct": 1.6834489424697106,
-      "prev_close": 4657.10009765625,
+      "price": 4742.2001953125,
+      "change_pct": -0.15369627723970944,
+      "prev_close": 4749.5,
       "name": "黄金",
-      "updated": "2026-04-09T03:40:09.174309",
+      "updated": "2026-04-09T04:37:24.016985",
       "unit": "USD/oz",
       "icon": "🥇",
       "category": "metals"
     },
     "SI=F": {
-      "price": 73.92500305175781,
-      "change_pct": 2.9223495086291953,
-      "prev_close": 71.82599639892578,
+      "price": 74.125,
+      "change_pct": -1.460968623982734,
+      "prev_close": 75.2239990234375,
       "name": "白银",
-      "updated": "2026-04-09T03:40:09.253905",
+      "updated": "2026-04-09T04:37:24.094947",
       "unit": "USD/oz",
       "icon": "🥈",
       "category": "metals"
     },
     "HG=F": {
-      "price": 5.718999862670898,
-      "change_pct": 3.147262918529001,
-      "prev_close": 5.54449987411499,
+      "price": 5.7210001945495605,
+      "change_pct": -0.6684578865322128,
+      "prev_close": 5.759500026702881,
       "name": "铜",
-      "updated": "2026-04-09T03:40:09.331258",
+      "updated": "2026-04-09T04:37:24.170347",
       "unit": "USD/吨",
       "icon": "🔶",
       "category": "metals"
@@ -36,27 +36,27 @@
       "change_pct": NaN,
       "prev_close": 14.864999771118164,
       "name": "镍",
-      "updated": "2026-04-09T03:40:09.424645",
+      "updated": "2026-04-09T04:37:24.258902",
       "unit": "USD (ETC)",
       "icon": "⚙️",
       "category": "metals"
     },
     "REMX": {
-      "price": 93.5999984741211,
-      "change_pct": 5.062299159970143,
+      "price": NaN,
+      "change_pct": NaN,
       "prev_close": 89.08999633789062,
       "name": "稀土ETF",
-      "updated": "2026-04-09T03:40:09.532934",
+      "updated": "2026-04-09T04:37:24.372632",
       "unit": "USD",
       "icon": "💎",
       "category": "metals"
     },
     "CL=F": {
-      "price": 97.05000305175781,
-      "change_pct": -14.077020209013668,
-      "prev_close": 112.94999694824219,
+      "price": 97.48999786376953,
+      "change_pct": 3.262360006555412,
+      "prev_close": 94.41000366210938,
       "name": "WTI原油",
-      "updated": "2026-04-09T03:40:09.606872",
+      "updated": "2026-04-09T04:37:24.445099",
       "unit": "USD/bbl",
       "icon": "🛢️",
       "category": "commodities"
@@ -64,39 +64,39 @@
     "BTCUSDT": {
       "error": true,
       "name": "BTC",
-      "updated": "2026-04-09T03:40:09.870615"
+      "updated": "2026-04-09T04:37:24.757093"
     },
     "ETHUSDT": {
       "error": true,
       "name": "ETH",
-      "updated": "2026-04-09T03:40:09.923530"
+      "updated": "2026-04-09T04:37:24.897511"
     },
     "CNY=X": {
-      "price": 6.833899974822998,
-      "change_pct": -0.3325210218795564,
+      "price": 6.832300186157227,
+      "change_pct": -0.35585278029022066,
       "prev_close": 6.8566999435424805,
       "name": "USD/CNY",
-      "updated": "2026-04-09T03:40:09.995725",
+      "updated": "2026-04-09T04:37:24.973400",
       "unit": "",
       "icon": "🇨🇳",
       "category": "fx"
     },
     "JPY=X": {
-      "price": 158.69000244140625,
-      "change_pct": -0.01638207616281015,
+      "price": 158.68600463867188,
+      "change_pct": -0.018900916511786825,
       "prev_close": 158.71600341796875,
       "name": "USD/JPY",
-      "updated": "2026-04-09T03:40:10.068910",
+      "updated": "2026-04-09T04:37:25.050143",
       "unit": "",
       "icon": "🇯🇵",
       "category": "fx"
     },
     "EURUSD=X": {
-      "price": 1.1669973134994507,
-      "change_pct": -0.14237857911319096,
+      "price": 1.1674060821533203,
+      "change_pct": -0.10740106458538386,
       "prev_close": 1.1686612367630005,
       "name": "EUR/USD",
-      "updated": "2026-04-09T03:40:10.143753",
+      "updated": "2026-04-09T04:37:25.124260",
       "unit": "",
       "icon": "🇪🇺",
       "category": "fx"
