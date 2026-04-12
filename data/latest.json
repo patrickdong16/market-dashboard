@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-04-12T17:01:31.070800",
+  "updated_at": "2026-04-12T17:25:08.253943",
   "assets": {
     "GC=F": {
       "price": 4787.39990234375,
       "change_pct": -0.10016887385976521,
       "prev_close": 4792.2001953125,
       "name": "黄金",
-      "updated": "2026-04-12T17:01:31.655827",
+      "updated": "2026-04-12T17:25:08.625565",
       "unit": "USD/oz",
       "icon": "🥇",
       "category": "metals"
@@ -16,7 +16,7 @@
       "change_pct": 0.2661391094962191,
       "prev_close": 76.2770004272461,
       "name": "白银",
-      "updated": "2026-04-12T17:01:31.881276",
+      "updated": "2026-04-12T17:25:08.759732",
       "unit": "USD/oz",
       "icon": "🥈",
       "category": "metals"
@@ -26,7 +26,7 @@
       "change_pct": 2.400835211619297,
       "prev_close": 5.748000144958496,
       "name": "铜",
-      "updated": "2026-04-12T17:01:32.095948",
+      "updated": "2026-04-12T17:25:08.860984",
       "unit": "USD/吨",
       "icon": "🔶",
       "category": "metals"
@@ -36,7 +36,7 @@
       "change_pct": 0.5003322909293293,
       "prev_close": 14.989999771118164,
       "name": "镍",
-      "updated": "2026-04-12T17:01:32.185726",
+      "updated": "2026-04-12T17:25:08.955442",
       "unit": "USD (ETC)",
       "icon": "⚙️",
       "category": "metals"
@@ -46,7 +46,7 @@
       "change_pct": 1.3948531054993039,
       "prev_close": 93.19999694824219,
       "name": "稀土ETF",
-      "updated": "2026-04-12T17:01:32.410014",
+      "updated": "2026-04-12T17:25:09.100844",
       "unit": "USD",
       "icon": "💎",
       "category": "metals"
@@ -56,7 +56,7 @@
       "change_pct": -1.3282957139829172,
       "prev_close": 97.87000274658203,
       "name": "WTI原油",
-      "updated": "2026-04-12T17:01:32.595767",
+      "updated": "2026-04-12T17:25:09.236025",
       "unit": "USD/bbl",
       "icon": "🛢️",
       "category": "commodities"
@@ -64,19 +64,19 @@
     "BTCUSDT": {
       "error": true,
       "name": "BTC",
-      "updated": "2026-04-12T17:01:32.784712"
+      "updated": "2026-04-12T17:25:09.313956"
     },
     "ETHUSDT": {
       "error": true,
       "name": "ETH",
-      "updated": "2026-04-12T17:01:32.948627"
+      "updated": "2026-04-12T17:25:09.361420"
     },
     "CNY=X": {
       "price": 6.827300071716309,
       "change_pct": -0.06001472517611439,
       "prev_close": 6.831399917602539,
       "name": "USD/CNY",
-      "updated": "2026-04-12T17:01:33.036299",
+      "updated": "2026-04-12T17:25:09.446239",
       "unit": "",
       "icon": "🇨🇳",
       "category": "fx"
@@ -86,7 +86,7 @@
       "change_pct": 0.38009911162725474,
       "prev_close": 158.64199829101562,
       "name": "USD/JPY",
-      "updated": "2026-04-12T17:01:33.219769",
+      "updated": "2026-04-12T17:25:09.534850",
       "unit": "",
       "icon": "🇯🇵",
       "category": "fx"
@@ -96,7 +96,7 @@
       "change_pct": 0.5958337849084614,
       "prev_close": 1.16593599319458,
       "name": "EUR/USD",
-      "updated": "2026-04-12T17:01:33.449487",
+      "updated": "2026-04-12T17:25:09.670077",
       "unit": "",
       "icon": "🇪🇺",
       "category": "fx"
