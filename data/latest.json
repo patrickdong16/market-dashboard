@@ -1,62 +1,57 @@
 {
-  "updated_at": "2026-04-15T13:32:22.056728",
+  "updated_at": "2026-04-15T14:15:10.660852",
   "assets": {
     "GC=F": {
-      "price": 4838.89990234375,
-      "change_pct": 0.2880808775906736,
-      "prev_close": 4825.0,
+      "error": true,
       "name": "黄金",
-      "updated": "2026-04-15T13:33:22.143557",
-      "unit": "USD/oz",
-      "icon": "🥇",
-      "category": "metals"
+      "updated": "2026-04-15T14:16:07.263910"
     },
     "SI=F": {
-      "price": 79.49500274658203,
-      "change_pct": 0.1310021384907481,
+      "price": 80.27999877929688,
+      "change_pct": 1.1197742211969957,
       "prev_close": 79.39099884033203,
       "name": "白银",
-      "updated": "2026-04-15T13:33:41.970817",
+      "updated": "2026-04-15T14:16:13.817801",
       "unit": "USD/oz",
       "icon": "🥈",
       "category": "metals"
     },
     "HG=F": {
-      "price": 6.09499979019165,
-      "change_pct": 0.40358938479797085,
+      "price": 6.077499866485596,
+      "change_pct": 0.11531125279942024,
       "prev_close": 6.070499897003174,
       "name": "铜",
-      "updated": "2026-04-15T13:33:43.444173",
+      "updated": "2026-04-15T14:16:16.316228",
       "unit": "USD/吨",
       "icon": "🔶",
       "category": "metals"
     },
     "NICK.L": {
-      "price": 16.030000686645508,
-      "change_pct": 0.675151717922507,
+      "price": 16.024999618530273,
+      "change_pct": 0.6437429050911805,
       "prev_close": 15.922499656677246,
       "name": "镍",
-      "updated": "2026-04-15T13:33:43.746761",
+      "updated": "2026-04-15T14:16:17.392765",
       "unit": "USD (ETC)",
       "icon": "⚙️",
       "category": "metals"
     },
     "REMX": {
-      "price": 96.66000366210938,
-      "change_pct": -2.1659912181656185,
+      "price": 97.5199966430664,
+      "change_pct": -1.2955530052168687,
       "prev_close": 98.80000305175781,
       "name": "稀土ETF",
-      "updated": "2026-04-15T13:33:44.075068",
+      "updated": "2026-04-15T14:16:27.059063",
       "unit": "USD",
       "icon": "💎",
       "category": "metals"
     },
     "CL=F": {
-      "price": 91.22000122070312,
-      "change_pct": -0.06572914044271218,
+      "price": 91.05000305175781,
+      "change_pct": -0.25196727718540196,
       "prev_close": 91.27999877929688,
       "name": "WTI原油",
-      "updated": "2026-04-15T13:33:44.302024",
+      "updated": "2026-04-15T14:17:44.661855",
       "unit": "USD/bbl",
       "icon": "🛢️",
       "category": "commodities"
@@ -64,39 +59,39 @@
     "BTCUSDT": {
       "error": true,
       "name": "BTC",
-      "updated": "2026-04-15T13:33:44.534110"
+      "updated": "2026-04-15T14:17:44.835797"
     },
     "ETHUSDT": {
       "error": true,
       "name": "ETH",
-      "updated": "2026-04-15T13:33:44.666049"
+      "updated": "2026-04-15T14:17:44.944453"
     },
     "CNY=X": {
-      "price": 6.819499969482422,
-      "change_pct": -0.15811728659873445,
+      "price": 6.8196001052856445,
+      "change_pct": -0.1566512337846705,
       "prev_close": 6.8302998542785645,
       "name": "USD/CNY",
-      "updated": "2026-04-15T13:33:44.902296",
+      "updated": "2026-04-15T14:17:47.599417",
       "unit": "",
       "icon": "🇨🇳",
       "category": "fx"
     },
     "JPY=X": {
-      "price": 158.98500061035156,
-      "change_pct": -0.1438340219789656,
+      "price": 159.0,
+      "change_pct": -0.1344131235511056,
       "prev_close": 159.21400451660156,
       "name": "USD/JPY",
-      "updated": "2026-04-15T13:33:45.124207",
+      "updated": "2026-04-15T14:17:49.846226",
       "unit": "",
       "icon": "🇯🇵",
       "category": "fx"
     },
     "EURUSD=X": {
-      "price": 1.179940938949585,
-      "change_pct": 0.2595813494847016,
+      "price": 1.1796625852584839,
+      "change_pct": 0.23592963640682363,
       "prev_close": 1.176885962486267,
       "name": "EUR/USD",
-      "updated": "2026-04-15T13:33:45.343343",
+      "updated": "2026-04-15T14:17:54.638632",
       "unit": "",
       "icon": "🇪🇺",
       "category": "fx"
@@ -104,7 +99,7 @@
   },
   "meta": {
     "total_assets": 11,
-    "successful_fetches": 9,
-    "failed_fetches": 2
+    "successful_fetches": 8,
+    "failed_fetches": 3
   }
 }
