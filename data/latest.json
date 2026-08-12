@@ -1,32 +1,32 @@
 {
-  "updated_at": "2026-08-12T22:08:59.203216",
+  "updated_at": "2026-08-12T22:58:40.846267",
   "assets": {
     "GC=F": {
-      "price": 4469.0,
-      "change_pct": 1.9621263974446725,
+      "price": 4459.0,
+      "change_pct": 1.7339721651836641,
       "prev_close": 4383.0,
       "name": "黄金",
-      "updated": "2026-08-12T22:09:00.383198",
+      "updated": "2026-08-12T22:58:41.089549",
       "unit": "USD/oz",
       "icon": "🥇",
       "category": "metals"
     },
     "SI=F": {
-      "price": 65.52999877929688,
-      "change_pct": 1.1749473048867283,
+      "price": 65.22000122070312,
+      "change_pct": 0.6963270204426649,
       "prev_close": 64.76899719238281,
       "name": "白银",
-      "updated": "2026-08-12T22:09:00.693641",
+      "updated": "2026-08-12T22:58:41.205960",
       "unit": "USD/oz",
       "icon": "🥈",
       "category": "metals"
     },
     "HG=F": {
-      "price": 6.607999801635742,
-      "change_pct": -0.06049889484406481,
+      "price": 6.605000019073486,
+      "change_pct": -0.10586765720716072,
       "prev_close": 6.611999988555908,
       "name": "铜",
-      "updated": "2026-08-12T22:09:00.972499",
+      "updated": "2026-08-12T22:58:41.334281",
       "unit": "USD/吨",
       "icon": "🔶",
       "category": "metals"
@@ -36,7 +36,7 @@
       "change_pct": 0.6331327092347465,
       "prev_close": 14.609999656677246,
       "name": "镍",
-      "updated": "2026-08-12T22:09:01.258176",
+      "updated": "2026-08-12T22:58:41.420354",
       "unit": "USD (ETC)",
       "icon": "⚙️",
       "category": "metals"
@@ -46,67 +46,57 @@
       "change_pct": 0.40406354752520024,
       "prev_close": 76.72000122070312,
       "name": "稀土ETF",
-      "updated": "2026-08-12T22:09:01.586045",
+      "updated": "2026-08-12T22:58:41.539639",
       "unit": "USD",
       "icon": "💎",
       "category": "metals"
     },
     "CL=F": {
-      "price": 82.58000183105469,
-      "change_pct": -0.7451864662605603,
+      "price": 82.69000244140625,
+      "change_pct": -0.6129741893538765,
       "prev_close": 83.19999694824219,
       "name": "WTI原油",
-      "updated": "2026-08-12T22:09:01.847407",
+      "updated": "2026-08-12T22:58:41.622095",
       "unit": "USD/bbl",
       "icon": "🛢️",
       "category": "commodities"
     },
     "BTCUSDT": {
-      "price": 63475.99,
-      "change_pct": -0.376,
-      "prev_close": 63600.0,
+      "error": true,
       "name": "BTC",
-      "updated": "2026-08-12T22:09:02.561182",
-      "unit": "USD",
-      "icon": "₿",
-      "category": "crypto"
+      "updated": "2026-08-12T22:58:41.774863"
     },
     "ETHUSDT": {
-      "price": 1879.11,
-      "change_pct": -0.227,
-      "prev_close": 1882.59,
+      "error": true,
       "name": "ETH",
-      "updated": "2026-08-12T22:09:03.177136",
-      "unit": "USD",
-      "icon": "Ξ",
-      "category": "crypto"
+      "updated": "2026-08-12T22:58:41.846720"
     },
     "CNY=X": {
       "price": 6.736000061035156,
       "change_pct": -0.16895020700234192,
       "prev_close": 6.747399806976318,
       "name": "USD/CNY",
-      "updated": "2026-08-12T22:09:03.447926",
+      "updated": "2026-08-12T22:58:41.925903",
       "unit": "",
       "icon": "🇨🇳",
       "category": "fx"
     },
     "JPY=X": {
-      "price": 159.44200134277344,
-      "change_pct": 0.17969506199541957,
+      "price": 159.39500427246094,
+      "change_pct": 0.15016612900999074,
       "prev_close": 159.156005859375,
       "name": "USD/JPY",
-      "updated": "2026-08-12T22:09:03.805600",
+      "updated": "2026-08-12T22:58:42.007636",
       "unit": "",
       "icon": "🇯🇵",
       "category": "fx"
     },
     "EURUSD=X": {
-      "price": 1.1527377367019653,
-      "change_pct": -0.1648490289734532,
+      "price": 1.1530035734176636,
+      "change_pct": -0.14182570996482285,
       "prev_close": 1.1546411514282227,
       "name": "EUR/USD",
-      "updated": "2026-08-12T22:09:04.077062",
+      "updated": "2026-08-12T22:58:42.127132",
       "unit": "",
       "icon": "🇪🇺",
       "category": "fx"
@@ -114,7 +104,7 @@
   },
   "meta": {
     "total_assets": 11,
-    "successful_fetches": 11,
-    "failed_fetches": 0
+    "successful_fetches": 9,
+    "failed_fetches": 2
   }
 }
