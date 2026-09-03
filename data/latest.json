@@ -1,32 +1,32 @@
 {
-  "updated_at": "2026-09-03T00:25:19.744721",
+  "updated_at": "2026-09-03T04:48:49.073229",
   "assets": {
     "GC=F": {
-      "price": 4434.7998046875,
-      "change_pct": 1.9963156551862926,
-      "prev_close": 4348.0,
+      "price": 4482.89990234375,
+      "change_pct": 2.670455600210329,
+      "prev_close": 4366.2998046875,
       "name": "黄金",
-      "updated": "2026-09-03T00:25:20.073616",
+      "updated": "2026-09-03T04:48:49.308555",
       "unit": "USD/oz",
       "icon": "🥇",
       "category": "metals"
     },
     "SI=F": {
-      "price": 65.86000061035156,
-      "change_pct": 1.9220719726173934,
-      "prev_close": 64.61799621582031,
+      "price": 66.73999786376953,
+      "change_pct": 3.1163547801092797,
+      "prev_close": 64.7229995727539,
       "name": "白银",
-      "updated": "2026-09-03T00:25:20.173459",
+      "updated": "2026-09-03T04:48:49.386926",
       "unit": "USD/oz",
       "icon": "🥈",
       "category": "metals"
     },
     "HG=F": {
-      "price": 6.598999977111816,
-      "change_pct": 1.421658543249055,
-      "prev_close": 6.506499767303467,
+      "price": 6.61299991607666,
+      "change_pct": 1.7228117182677922,
+      "prev_close": 6.500999927520752,
       "name": "铜",
-      "updated": "2026-09-03T00:25:20.267601",
+      "updated": "2026-09-03T04:48:49.459620",
       "unit": "USD/吨",
       "icon": "🔶",
       "category": "metals"
@@ -36,27 +36,27 @@
       "change_pct": NaN,
       "prev_close": 14.475000381469727,
       "name": "镍",
-      "updated": "2026-09-03T00:25:20.369352",
+      "updated": "2026-09-03T04:48:49.539004",
       "unit": "USD (ETC)",
       "icon": "⚙️",
       "category": "metals"
     },
     "REMX": {
-      "price": NaN,
-      "change_pct": NaN,
+      "price": 76.29000091552734,
+      "change_pct": 0.13124881338335348,
       "prev_close": 76.19000244140625,
       "name": "稀土ETF",
-      "updated": "2026-09-03T00:25:20.487297",
+      "updated": "2026-09-03T04:48:49.631907",
       "unit": "USD",
       "icon": "💎",
       "category": "metals"
     },
     "CL=F": {
-      "price": 90.76000213623047,
-      "change_pct": 0.5985379164497592,
-      "prev_close": 90.22000122070312,
+      "price": 90.75,
+      "change_pct": -0.2856852325322204,
+      "prev_close": 91.01000213623047,
       "name": "WTI原油",
-      "updated": "2026-09-03T00:25:20.583325",
+      "updated": "2026-09-03T04:48:49.742150",
       "unit": "USD/bbl",
       "icon": "🛢️",
       "category": "commodities"
@@ -64,39 +64,39 @@
     "BTCUSDT": {
       "error": true,
       "name": "BTC",
-      "updated": "2026-09-03T00:25:20.715901"
+      "updated": "2026-09-03T04:48:49.948840"
     },
     "ETHUSDT": {
       "error": true,
       "name": "ETH",
-      "updated": "2026-09-03T00:25:20.754737"
+      "updated": "2026-09-03T04:48:50.050767"
     },
     "CNY=X": {
-      "price": 6.710000038146973,
-      "change_pct": -0.15178154753318265,
+      "price": 6.717299938201904,
+      "change_pct": -0.04315531635252288,
       "prev_close": 6.720200061798096,
       "name": "USD/CNY",
-      "updated": "2026-09-03T00:25:20.978902",
+      "updated": "2026-09-03T04:48:50.127589",
       "unit": "",
       "icon": "🇨🇳",
       "category": "fx"
     },
     "JPY=X": {
-      "price": 158.85299682617188,
-      "change_pct": -0.8383494759541863,
+      "price": 157.6479949951172,
+      "change_pct": -1.5905541736259248,
       "prev_close": 160.1959991455078,
       "name": "USD/JPY",
-      "updated": "2026-09-03T00:25:21.277146",
+      "updated": "2026-09-03T04:48:50.235413",
       "unit": "",
       "icon": "🇯🇵",
       "category": "fx"
     },
     "EURUSD=X": {
-      "price": 1.159151554107666,
-      "change_pct": -0.034769020412149625,
+      "price": 1.1602274179458618,
+      "change_pct": 0.058013477878699087,
       "prev_close": 1.1595547199249268,
       "name": "EUR/USD",
-      "updated": "2026-09-03T00:25:21.672121",
+      "updated": "2026-09-03T04:48:50.307975",
       "unit": "",
       "icon": "🇪🇺",
       "category": "fx"
