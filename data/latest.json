@@ -1,62 +1,62 @@
 {
-  "updated_at": "2026-09-24T21:48:39.415161",
+  "updated_at": "2026-09-25T00:11:47.394900",
   "assets": {
     "GC=F": {
-      "price": 4310.10009765625,
-      "change_pct": -0.19219629666523935,
+      "price": 4303.89990234375,
+      "change_pct": -0.33577251592957685,
       "prev_close": 4318.39990234375,
       "name": "黄金",
-      "updated": "2026-09-24T21:48:39.676661",
+      "updated": "2026-09-25T00:11:47.638938",
       "unit": "USD/oz",
       "icon": "🥇",
       "category": "metals"
     },
     "SI=F": {
-      "price": 64.2750015258789,
-      "change_pct": -0.16619901837704912,
+      "price": 64.12999725341797,
+      "change_pct": -0.39142386994740175,
       "prev_close": 64.38200378417969,
       "name": "白银",
-      "updated": "2026-09-24T21:48:39.782141",
+      "updated": "2026-09-25T00:11:47.725696",
       "unit": "USD/oz",
       "icon": "🥈",
       "category": "metals"
     },
     "HG=F": {
-      "price": 6.773499965667725,
-      "change_pct": 1.4300687743706952,
+      "price": 6.769499778747559,
+      "change_pct": 1.3701678019813377,
       "prev_close": 6.677999973297119,
       "name": "铜",
-      "updated": "2026-09-24T21:48:39.876158",
+      "updated": "2026-09-25T00:11:47.809894",
       "unit": "USD/吨",
       "icon": "🔶",
       "category": "metals"
     },
     "NICK.L": {
-      "price": 14.3149995803833,
-      "change_pct": 0.21000863347314772,
+      "price": NaN,
+      "change_pct": NaN,
       "prev_close": 14.28499984741211,
       "name": "镍",
-      "updated": "2026-09-24T21:48:39.970182",
+      "updated": "2026-09-25T00:11:47.916494",
       "unit": "USD (ETC)",
       "icon": "⚙️",
       "category": "metals"
     },
     "REMX": {
-      "price": 66.93000030517578,
-      "change_pct": -2.6614336448521394,
+      "price": NaN,
+      "change_pct": NaN,
       "prev_close": 68.76000213623047,
       "name": "稀土ETF",
-      "updated": "2026-09-24T21:48:40.087670",
+      "updated": "2026-09-25T00:11:48.040160",
       "unit": "USD",
       "icon": "💎",
       "category": "metals"
     },
     "CL=F": {
-      "price": 94.76000213623047,
-      "change_pct": 2.8211787877674053,
+      "price": 93.8499984741211,
+      "change_pct": 1.8337616589164076,
       "prev_close": 92.16000366210938,
       "name": "WTI原油",
-      "updated": "2026-09-24T21:48:40.180919",
+      "updated": "2026-09-25T00:11:48.112920",
       "unit": "USD/bbl",
       "icon": "🛢️",
       "category": "commodities"
@@ -64,39 +64,39 @@
     "BTCUSDT": {
       "error": true,
       "name": "BTC",
-      "updated": "2026-09-24T21:48:40.260580"
+      "updated": "2026-09-25T00:11:48.272411"
     },
     "ETHUSDT": {
       "error": true,
       "name": "ETH",
-      "updated": "2026-09-24T21:48:40.292075"
+      "updated": "2026-09-25T00:11:48.302420"
     },
     "CNY=X": {
-      "price": 6.703700065612793,
-      "change_pct": 0.06119538109391549,
+      "price": 6.711100101470947,
+      "change_pct": 0.17165026818352636,
       "prev_close": 6.6996002197265625,
       "name": "USD/CNY",
-      "updated": "2026-09-24T21:48:40.388585",
+      "updated": "2026-09-25T00:11:48.380364",
       "unit": "",
       "icon": "🇨🇳",
       "category": "fx"
     },
     "JPY=X": {
-      "price": 158.80299377441406,
-      "change_pct": 0.8503462501941702,
-      "prev_close": 157.46400451660156,
+      "price": 158.78199768066406,
+      "change_pct": 0.32666621995351935,
+      "prev_close": 158.26499938964844,
       "name": "USD/JPY",
-      "updated": "2026-09-24T21:48:40.481493",
+      "updated": "2026-09-25T00:11:48.487709",
       "unit": "",
       "icon": "🇯🇵",
       "category": "fx"
     },
     "EURUSD=X": {
       "price": 1.1376564502716064,
-      "change_pct": -0.6234364625879809,
-      "prev_close": 1.1447935104370117,
+      "change_pct": -0.04663898212437684,
+      "prev_close": 1.138187289237976,
       "name": "EUR/USD",
-      "updated": "2026-09-24T21:48:40.580155",
+      "updated": "2026-09-25T00:11:48.563966",
       "unit": "",
       "icon": "🇪🇺",
       "category": "fx"
