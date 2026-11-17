@@ -1,62 +1,62 @@
 {
-  "updated_at": "2026-11-16T18:07:35.390531",
+  "updated_at": "2026-11-17T01:51:12.476530",
   "assets": {
     "GC=F": {
-      "price": 3859.199951171875,
-      "change_pct": -0.6973238637202437,
+      "price": 3864.60009765625,
+      "change_pct": -0.558370452595867,
       "prev_close": 3886.300048828125,
       "name": "黄金",
-      "updated": "2026-11-16T18:07:35.678603",
+      "updated": "2026-11-17T01:51:12.774154",
       "unit": "USD/oz",
       "icon": "🥇",
       "category": "metals"
     },
     "SI=F": {
-      "price": 47.025001525878906,
-      "change_pct": -4.091282610018282,
+      "price": 47.18000030517578,
+      "change_pct": -3.7751585560680616,
       "prev_close": 49.03099822998047,
       "name": "白银",
-      "updated": "2026-11-16T18:07:35.798672",
+      "updated": "2026-11-17T01:51:12.894280",
       "unit": "USD/oz",
       "icon": "🥈",
       "category": "metals"
     },
     "HG=F": {
-      "price": 6.013500213623047,
-      "change_pct": -1.0856153069781758,
+      "price": 5.994999885559082,
+      "change_pct": -1.3899220338525742,
       "prev_close": 6.079500198364258,
       "name": "铜",
-      "updated": "2026-11-16T18:07:35.948931",
+      "updated": "2026-11-17T01:51:13.001184",
       "unit": "USD/吨",
       "icon": "🔶",
       "category": "metals"
     },
     "NICK.L": {
-      "price": 13.710000038146973,
-      "change_pct": -0.6881583841268807,
+      "price": NaN,
+      "change_pct": NaN,
       "prev_close": 13.805000305175781,
       "name": "镍",
-      "updated": "2026-11-16T18:07:36.062469",
+      "updated": "2026-11-17T01:51:13.111616",
       "unit": "USD (ETC)",
       "icon": "⚙️",
       "category": "metals"
     },
     "REMX": {
-      "price": 47.38999938964844,
-      "change_pct": -5.257898928521558,
+      "price": NaN,
+      "change_pct": NaN,
       "prev_close": 50.02000045776367,
       "name": "稀土ETF",
-      "updated": "2026-11-16T18:07:36.196185",
+      "updated": "2026-11-17T01:51:13.242836",
       "unit": "USD",
       "icon": "💎",
       "category": "metals"
     },
     "CL=F": {
-      "price": 86.08000183105469,
-      "change_pct": -2.8003565897777136,
+      "price": 85.0999984741211,
+      "change_pct": -3.9069548101369636,
       "prev_close": 88.55999755859375,
       "name": "WTI原油",
-      "updated": "2026-11-16T18:07:36.336142",
+      "updated": "2026-11-17T01:51:13.353688",
       "unit": "USD/bbl",
       "icon": "🛢️",
       "category": "commodities"
@@ -64,39 +64,39 @@
     "BTCUSDT": {
       "error": true,
       "name": "BTC",
-      "updated": "2026-11-16T18:07:36.367548"
+      "updated": "2026-11-17T01:51:13.383315"
     },
     "ETHUSDT": {
       "error": true,
       "name": "ETH",
-      "updated": "2026-11-16T18:07:36.391996"
+      "updated": "2026-11-17T01:51:13.405217"
     },
     "CNY=X": {
-      "price": 6.652900218963623,
-      "change_pct": -0.26235193289394987,
-      "prev_close": 6.670400142669678,
+      "price": 6.664599895477295,
+      "change_pct": -0.09593926448422353,
+      "prev_close": 6.671000003814697,
       "name": "USD/CNY",
-      "updated": "2026-11-16T18:07:36.505026",
+      "updated": "2026-11-17T01:51:13.506296",
       "unit": "",
       "icon": "🇨🇳",
       "category": "fx"
     },
     "JPY=X": {
-      "price": 159.51199340820312,
-      "change_pct": -0.22705650776974196,
-      "prev_close": 159.875,
+      "price": 159.51800537109375,
+      "change_pct": -0.1639713419731683,
+      "prev_close": 159.77999877929688,
       "name": "USD/JPY",
-      "updated": "2026-11-16T18:07:36.612531",
+      "updated": "2026-11-17T01:51:13.621491",
       "unit": "",
       "icon": "🇯🇵",
       "category": "fx"
     },
     "EURUSD=X": {
-      "price": 1.100473165512085,
-      "change_pct": -0.41158238929661395,
-      "prev_close": 1.1050212383270264,
+      "price": 1.0995051860809326,
+      "change_pct": -0.27048117752680406,
+      "prev_close": 1.1024872064590454,
       "name": "EUR/USD",
-      "updated": "2026-11-16T18:07:36.732449",
+      "updated": "2026-11-17T01:51:15.690115",
       "unit": "",
       "icon": "🇪🇺",
       "category": "fx"
